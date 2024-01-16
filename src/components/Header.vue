@@ -1,227 +1,137 @@
 <template>
-    <header class="header">
-        <nav class="nav">
-            <div class="header__nav containerHeader">
-                <div class="nav__logo">
-                    <div class="logo__img">
-                        <div class="logo__img__eyes">
-                            <img src="../assets/images/Vector(Stroke).svg" alt="">
-                            <img src="../assets/images/Vector(Stroke).svg" alt="">
-                        </div>
-                        <img class="atom" src="../assets/images/atom.svg" alt="">
-                    </div>
-                    <h1 class="nav__logo">
-                        TSX
-                    </h1>
-                </div>
-                <div class="nav__content">
-                    <div class="nav__links">
-                        <ul>
-                            <a class="link__list" href="!#">
-                                <img src="../assets/images/icon-heart.svg" alt="">
-                                <span>Избранное</span>
-                            </a>
-                        </ul>
-                        <ul>
-                            <a class="link__list" href="!#">
-                                <img src="../assets/images/icon-package.svg" alt="">
-                                <span>Заказы</span>
-                            </a>
-                        </ul>
-                        <ul>
-                            <a class="link__list" href="!#">
-                                <img src="../assets/images/icon-basket.svg" alt="">
-                                <span>Корзина</span>
-                            </a>
-                        </ul>
-                    </div>
-                    <div class="nav__user">
-                        <img src="../assets/images/avatar.png" alt="">
-                        <span>Алексей</span>
-                        <button>
-                            <img src="../assets/images/chevron-down.svg" alt="">
-                        </button>
-                    </div>
-                    <div class="nav__btn">
-                        <button>
-                            Подать объявления
-                        </button>
-                        <button>
-                            <img src="../assets/images/ru.png" alt="">
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+  <header class="header">
+    <div class="nav">
+      <div class="container nav__content">
+        <a href="#" class="nav__logo">
+          <img src="@/assets/images/logo.svg" alt="" /> <span>vue weather</span>
+        </a>
+        <div class="nav__search">
+          <button class="nav__search-btn">
+            <img src="@/assets/images/theme.svg" alt="" />
+          </button>
+          <label for="">
+            <input
+              type="text"
+              class="nav__input"
+              placeholder="Выбрать город"
+              v-model="searchController"
+              @keydown.enter="setWeather"
+            />
+            <button class="nav__search-theme">
+              <img
+                src="@/assets/images/close.webp"
+                alt=""
+                v-if="searchController"
+              />
+            </button>
+          </label>
+        </div>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      searchController: "",
+    };
+  },
 
-}
+  methods: {
+    setWeather() {
+      this.$store.dispatch('getWeatherData', this.searchController)
+    },
+  },
+};
 </script>
 
-<style lang="scss">
-header {
-    background: white;
-}
-
-nav {
-    padding: 11px 0;
-    background: rgba(85, 183, 183, 0.69);
-}
-
-.header__nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+<style>
+.nav {
+  padding: 20px 0;
 }
 
 .nav__logo {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.logo__img {
-    margin-bottom: -26px;
-    display: flex;
-    flex-direction: column;
-    gap: 12.75px;
+.nav__logo span {
+  color: #4793ff;
+  font-family: "Montserrat";
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
-.logo__img__eyes {
-    display: flex;
-    gap: 6.85px;
+.nav__search label {
+  position: relative;
 }
 
-.nav__logo {
-    color: var(--blackColor);
-    text-align: center;
-    font-family: Road Rage;
-    font-size: 50px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
+.nav__search label img {
+  position: absolute;
+  width: 20px;
+  top: 50%;
+  transform: translate(50%, -50%);
+  right: 20px;
+}
+
+.nav__search label button {
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .nav__content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.nav__links {
-    display: flex;
-    align-items: center;
-    gap: 24px;
+.nav__input {
+  border: none;
+  outline: none;
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 10px;
+  background: rgba(71, 147, 255, 0.2);
+  padding: 9px 20px;
 }
 
-.link__list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+.nav__input::placeholder {
+  color: #000;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
-.link__list img {
-    width: 24px;
-    height: 24px;
-    position: relative;
+.nav__search {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.link__list span {
-    color: #414141;
-    text-align: center;
-    font-family: Rubik;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
+.nav__search-btn {
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.nav__user {
-    padding: 8px;
-    margin-left: 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.nav__user span {
-    color: #232323;
-    font-family: Rubik;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-}
-
-.nav__user button {
-    display: flex;
-    align-items: center;
-    margin-left: 24px;
-}
-
-.nav__btn {
-    display: flex;
-    align-items: center;
-    gap: 34px;
-    margin-left: 24px;
-}
-
-.nav__btn button:nth-child(1) {
-    border-radius: 5px;
-    padding: 11px 14px;
-    background: #0C7F8E;
-    color: #FFF;
-    font-family: Inter;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-
-    &:focus {
-        outline: 3px solid white;
-    }
-}
-
-@media(max-width: 994.99px) {
-    .header__nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 30px;
-    }
-}
-
-@media(max-width: 719.99px) {
-    .nav__links {
-        gap: 13px;
-    }
-    .nav__user {
-        margin-left: 16px;
-    }
-    .nav__btn {
-        margin-left: 8px;
-        gap: 10px;
-    }
-    .nav__user button {
-        margin-left: 14px;
-    }
-    .nav__btn button:nth-child(1) {
-        font-size: 15px;
-    }
-}
-
-@media(max-width: 588.99px) {
-    .nav__content {
-        justify-content: center;
-        flex-wrap: wrap;
-        row-gap: 30px;
-    }
+.nav__search-btn:active {
+  transform: scale(0.9);
 }
 </style>

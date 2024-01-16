@@ -1,116 +1,76 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="weatherData">
     <Header />
     <Main />
-    <Footer />
+  </div>
+  <div class="loading__wrapper" v-else>
+    <div class="loading__wrapper-item"></div>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
-import Main from "./components/Main.vue";
-import Footer from "@/components/Footer.vue";
+import Main from "@/components/Main.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   data() {
-    return {
-    }
+    return {};
   },
   components: {
     Header,
     Main,
-    Footer,
-  }
-}
+  },
+  methods: {
+    ...mapActions(["getWeatherData"]),
+  },
+  computed: {
+    ...mapGetters(["weatherData"]),
+  },
+  created() {
+    setTimeout(() => {
+      this.getWeatherData("Tashkent");
+    }, 2000);
+  },
+};
 </script>
+ <style lang="scss">
+.loading__wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-<style lang="scss">
-:root {
-  --mainColor: #0C7F8E;
-  --greyColor: #A6A6A6;
-  --blackColor: #000;
-}
+  &-item {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 10px solid grey;
+    position: relative;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-input,
-button {
-  border: none;
-  outline: none;
-  background: none;
-  transition: .3s;
-}
-
-button {
-  cursor: pointer;
-  &:active {
-    transform: scale(0.95);
+    &::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      top: -10px;
+      left: -10px;
+      position: absolute;
+      border: 10px solid transparent;
+      border-top-color: blue;
+      border-radius: 50%;
+      animation: 1s loading ease infinite;
+    }
   }
 }
 
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
 
-.container {
-  max-width: 1010px;
-  width: 100%;
-  padding: 0 35px;
-  margin: 0 auto;
-}
-
-.containerHeader {
-  max-width: 1010px;
-  width: 100%;
-  padding: 0 21px 0 55px;
-  margin: 0 auto;
-}
-
-body {
-  background: #F5FCFC;
-}
-
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter-Regular.ttf');
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'Rubik';
-  src: url('./assets/fonts/Rubik-Regular.ttf');
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'Rubik';
-  src: url('./assets/fonts/Rubik-SemiBold.ttf');
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: 'Road Rage';
-  src: url('./assets/fonts/RoadRage-Regular.ttf');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Roboto';
-  src: url('./assets/fonts/Roboto-Regular.ttf');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Roboto';
-  src: url('./assets/fonts/Roboto-Bold.ttf');
-  font-weight: 700;
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

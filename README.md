@@ -1,4 +1,4 @@
-# tsx
+# weather_app
 
 ## Project setup
 ```
